@@ -44,8 +44,6 @@ function DeapthFirstSearch() {
     while (stack.length > 0) {
         let keyIndex = stack.pop()
 
-        //TODO: I think this is not here, maybe in the loop above, pretty sure
-
         visited.set(`${keyIndex}`, true)
 
         const [row, col] = keyIndex.split('')
@@ -56,10 +54,7 @@ function DeapthFirstSearch() {
 
         neighbours.forEach(neighbour => {
             if (!visited.has(neighbour) && isColor([neighbour.split(''), [row, col]])) {
-                // const [row_, col_ ] = neighbo.split('')
-                // DeapthFirstSearch(index[0], index[1], index[indexes[0]][index[1]])
                 stack.push(neighbour)
-                //TODO: I think this is not here
                 currentColorCounter = currentColorCounter + 1;
                 console.log(`neighbo=${neighbour}`)
                 console.log(`currentColorCounter=${currentColorCounter}`)
@@ -78,16 +73,14 @@ function isColor([indexN, currentIndex]) {
     const [row, col] = currentIndex
     const neighbourColor = matrix[n_row][n_col]
     const currentColor = matrix[row][col]
-   // console.log('isColor', neighbourColor, currentColor)
     return neighbourColor === currentColor
 }
 
 function isValid(row, col) {
-    // need to return  a string r-c
     return matrix[row] && matrix[row][col] !== undefined
 }
 
-// TODO: !trick, it's easy but could be hard to think in a interview time
+// TODO:  it's easy but could take time
 function getNeighbours([_row, _col]) {
     const row = new Number(_row)
     const col = new Number(_col)
