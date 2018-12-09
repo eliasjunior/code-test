@@ -21,18 +21,17 @@ let currentColorCounter;
 init()
 
 function init() {
-    //tranverse the matrix
     // validation here, edge cases in the input
     findMaxHelper()
 }
 function findMaxHelper() {
     for (let row = 0; row < matrix.length; row++) {
         for (let col = 0; col < matrix[row].length; col++) {
-            // TODO: !trick, didnt know what to put, string or int etc, 
+            // TODO: key stack, !trick, didnt know what to put, string or int etc, 
             // for ex: when to get back what would do it, like converting etc
             stack.push(`${row}${col}`)
             currentColorCounter = 1;
-            DeapthFirstSearch();
+            deapthFirstSearch();
         }
     }
 
@@ -40,7 +39,7 @@ function findMaxHelper() {
         console.log(key + ' = ' + value);
     }
 }
-function DeapthFirstSearch() {
+function deapthFirstSearch() {
     while (stack.length > 0) {
         let keyIndex = stack.pop()
 
@@ -60,16 +59,19 @@ function DeapthFirstSearch() {
                 console.log(`currentColorCounter=${currentColorCounter}`)
             }
         })
-
-        let maxColor = colorMap.get(matrix[row][col])
-        maxColor = maxColor ? maxColor : -Infinity
-        maxColor = Math.max(maxColor, currentColorCounter)
-        colorMap.set(matrix[row][col], maxColor)
+        setMaxConnectedColor(row, col)
     }
 }
 
-function isColor([indexN, currentIndex]) {
-    const [n_row, n_col] = indexN
+function setMaxConnectedColor(row, col) {
+    let maxColor = colorMap.get(matrix[row][col])
+    maxColor = maxColor ? maxColor : -Infinity
+    maxColor = Math.max(maxColor, currentColorCounter)
+    colorMap.set(matrix[row][col], maxColor)
+}
+
+function isColor([neighbourIndexes, currentIndex]) {
+    const [n_row, n_col] = neighbourIndexes
     const [row, col] = currentIndex
     const neighbourColor = matrix[n_row][n_col]
     const currentColor = matrix[row][col]
@@ -106,7 +108,7 @@ function Queue() {
         }
     }
 }
-//TODO: not finished
+//TODO: unfinished
 function BreathFirstSearch(cell, row, col) {
     let queue = Queue();
     let visited = new Map();
